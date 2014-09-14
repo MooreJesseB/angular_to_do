@@ -30,10 +30,10 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:book).permit()
+    params.require(:task).permit(:title, :description, :completed)
   end
 
-  def render_main_layout_if_html
+  def render_main_layout_if_format_html
     #check the request format
     if request.format.symbol == :html
       render "layouts/application"

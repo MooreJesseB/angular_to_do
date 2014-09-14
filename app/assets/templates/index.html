@@ -1,1 +1,28 @@
-index.html
+<div class="container">
+  <h1>To do list App</h1>
+
+  <div class="container">
+    <form ng-submit="addTask()">
+      <input type="text" ng-model="newTask.title" placeholder="Task title" autofocus required>
+      <input type="textarea" ng-model="newTask.description" placeholder="Task description">
+      <button>Add Task</button>
+    </form>
+  </div>
+  <div class="container" ng-repeat="task in tasks">
+    <div class="divider container">
+      <h4>{{task.title}}</h4>
+      <p>{{task.description}}</p>
+      <input type="checkbox" id="check"><label for="check"> Completed?</label>
+      <input type="checkbox" ng-model="editChecked" id="editing{{$index}}"><label for="editing{{$index}}">Edit</label>
+      <form action="javascript:void(0);" ng-submit="editTask(task)" ng-show="editChecked">
+        <input type="text" ng-model="task.title">
+        <input type="text" ng-model="task.description">
+        <input type="submit" value="Save Changes">
+      </form>
+      <br>
+      <button ng-click="deleteTask(task)">Delete</button>
+      <br>  
+      
+    </div>
+  </div>
+</div>

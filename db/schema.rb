@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 20140914193429) do
   enable_extension "plpgsql"
 
   create_table "tasks", force: true do |t|
-    t.string   "description"
+    t.string   "title"
+    t.text     "description"
     t.boolean  "completed"
     t.datetime "created_at"
     t.datetime "updated_at"
