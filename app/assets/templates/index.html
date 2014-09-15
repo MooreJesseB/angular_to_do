@@ -1,6 +1,5 @@
 <div class="container">
-  <h1>To do list App</h1>
-
+  <h2>Enter a new task:</h1>
   <div class="container">
     <form ng-submit="addTask()">
       <input type="text" ng-model="newTask.title" placeholder="Task title" autofocus required>
@@ -8,21 +7,45 @@
       <button>Add Task</button>
     </form>
   </div>
-  <div class="container" ng-repeat="task in tasks">
-    <div class="divider container">
-      <h4>{{task.title}}</h4>
-      <p>{{task.description}}</p>
-      <input type="checkbox" id="check"><label for="check"> Completed?</label>
-      <input type="checkbox" ng-model="editChecked" id="editing{{$index}}"><label for="editing{{$index}}">Edit</label>
-      <form action="javascript:void(0);" ng-submit="editTask(task)" ng-show="editChecked">
-        <input type="text" ng-model="task.title">
-        <input type="text" ng-model="task.description">
-        <input type="submit" value="Save Changes">
-      </form>
-      <br>
-      <button ng-click="deleteTask(task)">Delete</button>
-      <br>  
-      
+  <div class="floaty">
+    <h2>Stuff to do:</h2>
+    <div class="container" ng-repeat="task in tasksIncomplete">
+      <div class="divider container">
+        <h4>{{task.title}}</h4>
+        <p>{{task.description}}</p>
+        <input type="checkbox" id="check" ng-change="editComplete(task)" ng-model="task.completed"><label for="check"> Completed?</label>
+        <input type="checkbox" ng-model="editChecked" id="editing{{$index}}"><label for="editing{{$index}}">Edit</label>
+        <form action="javascript:void(0);" ng-submit="editTask(task)" ng-show="editChecked">
+          <input type="text" ng-model="task.title">
+          <input type="text" ng-model="task.description">
+          <input type="submit" value="Save Changes">
+        </form>
+        <br>
+        <button ng-click="deleteTask(task)">Delete</button>
+        <br>  
+      </div>
+    </div>
+  </div>
+  <div class="floaty">
+  <!-- I looked into running an ejs partial for these two sections, but there is very little info out there about it -->
+    <h2 ng-show="tasks">Completed:</h2>
+    <div class="container" ng-repeat="task in tasksCompleted">
+      <div class="divider container">
+        <h4>{{task.title}}</h4>
+        <!-- <p>{{task.description}}</p> -->
+        <input type="checkbox" id="check" ng-change="editComplete(task)" ng-model="task.completed" value="true"><label for="check">Reopen?</label>
+        <div ng-show="task.complete">
+          <input type="checkbox" ng-model="editChecked" id="editing{{$index}}"><label for="editing{{$index}}">Edit</label>
+          <form action="javascript:void(0);" ng-submit="editTask(task)" ng-show="editChecked">
+            <input type="text" ng-model="task.title">
+            <input type="text" ng-model="task.description">
+            <input type="submit" value="Save Changes">
+          </form>
+        <br>
+        <button ng-click="deleteTask(task)">Delete</button>
+        </div>
+        <br>  
+      </div>
     </div>
   </div>
 </div>

@@ -22,7 +22,15 @@ ToDoApp.controller "TasksCtrl", [ "$scope", "$http", ($scope, $http) ->
   # READ
   $scope.getTasks = ->
     $http.get("/tasks.json").success (data) ->
+      $scope.tasksCompleted = []
+      $scope.tasksIncomplete = []
       $scope.tasks = data
+      $scope.tasks.forEach (item) ->
+        if item.completed
+          $scope.tasksCompleted.push item
+        else
+          $scope.tasksIncomplete.push item
+
 
   $scope.getTasks()
 
@@ -32,6 +40,7 @@ ToDoApp.controller "TasksCtrl", [ "$scope", "$http", ($scope, $http) ->
     $http.post("/tasks.json", $scope.newTask).success (data) ->
       $scope.newTask = {}
       $scope.tasks.push(data)
+      $scope.tasksIncomplete.push(data)
 
 
   # DELETE
@@ -48,7 +57,13 @@ ToDoApp.controller "TasksCtrl", [ "$scope", "$http", ($scope, $http) ->
     this.editChecked = false
     $http.put("/tasks/#{this.task.id}.json}", task).success (data) ->
       console.log data
+
+  $scope.editComplete = (task) ->
+    $http.put("/tasks/#{this.task.id}.json", task).success (data) ->
+      $scope.getTasks()
+      console.log data
 ]
+
 
 
 # Define config for CSRF token
